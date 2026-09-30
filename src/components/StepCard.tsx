@@ -17,6 +17,13 @@ export function StepCard({ step, variant }: StepCardProps) {
         {at && <span className="at">{at}</span>}
       </div>
       <div className="step-action">{step.action}</div>
+      {step.hotkeys && step.hotkeys.length > 0 && (
+        <div className="step-hotkeys">
+          {step.hotkeys.map((k, i) => (
+            <kbd key={`${i}-${k}`} className="hk">{k}</kbd>
+          ))}
+        </div>
+      )}
       {variant === "current" && step.notes && (
         <div className="step-notes">{step.notes}</div>
       )}

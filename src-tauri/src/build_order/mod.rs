@@ -69,6 +69,11 @@ pub struct Step {
     /// Age phase this step belongs to. Used for timeline phase coloring.
     #[serde(default)]
     pub phase: Option<Phase>,
+    /// In-game hotkey sequence for this step, as written in the build order
+    /// (e.g. `["H", "Q"]`). Display only: these are game keys, unrelated to
+    /// the app's global hotkeys.
+    #[serde(default)]
+    pub hotkeys: Option<Vec<String>>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

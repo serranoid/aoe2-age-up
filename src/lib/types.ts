@@ -21,6 +21,8 @@ export interface Step {
   villagers_assigned?: VillagerAssignment;
   target_time_seconds?: number;
   phase?: Phase;
+  /** In-game hotkey sequence for this step, e.g. ["H", "Q"]. */
+  hotkeys?: string[];
 }
 
 export interface Trigger {

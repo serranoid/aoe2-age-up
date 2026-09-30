@@ -347,6 +347,31 @@ html, body, #root {
   text-wrap: pretty;
 }
 .step-card.current .step-action { color: var(--accent); }
+.step-hotkeys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+  align-items: center;
+}
+.step-hotkeys .hk {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+  background: var(--bg-solid-2);
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+.step-card.current .step-hotkeys .hk {
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-color: var(--accent-glow);
+}
 .step-notes {
   font-size: 11px;
   color: var(--text-secondary);
@@ -517,6 +542,22 @@ html, body, #root {
   font-size: 10px;
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
+}
+.peek .hk-row {
+  display: flex;
+  gap: 3px;
+  flex: none;
+}
+.peek .hk-row kbd {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid var(--accent-glow);
+  border-radius: 3px;
+  padding: 3px 4px;
 }
 .peek .expand {
   background: none;

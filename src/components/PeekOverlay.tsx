@@ -32,6 +32,13 @@ export function PeekOverlay({ buildOrder, onExpand }: PeekProps) {
     <div className="peek" data-tauri-drag-region>
       <span className="ix">{idx + 1}/{total}</span>
       <span className="act">{step?.action ?? ""}</span>
+      {step?.hotkeys && step.hotkeys.length > 0 && (
+        <span className="hk-row">
+          {step.hotkeys.map((k, i) => (
+            <kbd key={`${i}-${k}`}>{k}</kbd>
+          ))}
+        </span>
+      )}
       {popNow != null && popMax != null && (
         <span className="pop-mini">{popNow}/{popMax}</span>
       )}
