@@ -69,12 +69,24 @@ fn main() {
             let app_data_dir = app.path().app_data_dir().expect("Failed to get app data dir");
             let storage = Storage::new(app_data_dir)?;
 
-            let bundled_dir = app
+            // Tauri maps `../build-orders/*` (the path in tauri.conf.json) to
+            // `<resources>/_up_/build-orders`, so both layouts must be probed —
+            // otherwise the bundled orders never land in the app data dir and
+            // the Library shows up empty.
+            let resource_dir = app
                 .path()
                 .resource_dir()
-                .expect("Failed to get resource dir")
-                .join("build-orders");
-            let _ = storage.copy_bundled_build_orders(&bundled_dir);
+                .expect("Failed to get resource dir");
+            for candidate in [
+                resource_dir.join("build-orders"),
+                resource_dir.join("_up_").join("build-orders"),
+            ] {
+                if candidate.is_dir() {
+                    if let Err(e) = storage.copy_bundled_build_orders(&candidate) {
+                        tracing::warn!("Failed to copy bundled build orders from {:?}: {}", candidate, e);
+                    }
+                }
+            }
 
             let settings = storage.load_settings().unwrap_or_default();
             let app_state = AppState {
