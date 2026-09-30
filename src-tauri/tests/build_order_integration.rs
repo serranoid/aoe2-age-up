@@ -116,5 +116,8 @@ fn test_load_all_sample_build_orders() {
         }
     }
 
-    assert_eq!(count, 5, "Expected exactly 5 sample build orders, found {}", count);
+    // Don't pin an exact count: build orders get added and archived over
+    // time, and what matters is that every file in the sample dir parses,
+    // has steps and validates clean.
+    assert!(count >= 1, "No sample build orders found in {:?}", sample_dir);
 }
