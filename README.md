@@ -160,6 +160,22 @@ sudo apt install libwebkit2gtk-4.1-dev libgtk-3-dev tesseract-ocr tesseract-ocr-
 `tesseract-data-eng` matters: without `eng.traineddata` the capture loop starts
 but every OCR read fails.
 
+#### Wayland / always-on-top
+
+GTK's `set_keep_above` is a no-op on native Wayland, so the window would lose
+its stacking place against a fullscreen game. `main.rs` therefore forces
+`GDK_BACKEND=x11` (unless you set it yourself): the overlay runs on XWayland,
+which is also where the game lives, and `_NET_WM_STATE_ABOVE` keeps it on top.
+That also lets KWin match the window against a launcher entry.
+
+To get the shield icon in your desktop menu / taskbar, drop the desktop entry
+and the icon theme files in place (adjust `Exec` to your build path):
+
+```bash
+install -Dm644 src-tauri/icons/icon.svg ~/.local/share/icons/hicolor/scalable/apps/aoe-overlay.svg
+# plus a ~/.local/share/applications/aoe-overlay.desktop with StartupWMClass=aoe-overlay
+```
+
 ### Setup
 
 ```bash

@@ -60,6 +60,15 @@ fn setup_panic_hook() {
 }
 
 fn main() {
+    // The overlay depends on always-on-top, and GTK's `set_keep_above` is a
+    // no-op on native Wayland (KWin exposes no keep-above protocol for
+    // xdg_toplevel). AoE2:DE runs through XWayland, so run the GTK window on
+    // X11 as well: `_NET_WM_STATE_ABOVE` then stacks it over the fullscreen
+    // game window. An explicit GDK_BACKEND from the caller still wins.
+    if std::env::var_os("GDK_BACKEND").is_none() {
+        std::env::set_var("GDK_BACKEND", "x11");
+    }
+
     setup_panic_hook();
     setup_logging();
 
